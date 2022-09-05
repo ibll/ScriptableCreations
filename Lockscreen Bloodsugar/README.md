@@ -1,6 +1,6 @@
 # Add your bloodsugar to the iOS 16 lockscreen!
 
-![demo](screenshot_demo.png)
+<img src="screenshot_demo.png" width=400px>
 
 ## Warning
 
@@ -11,4 +11,4 @@
 
 - It probably works with other settings but I am using these:
 
-     - ![calendar_settings](screenshot_calendar_settings.png)
+     - <img src="screenshot_calendar_settings.png" width=200px>
