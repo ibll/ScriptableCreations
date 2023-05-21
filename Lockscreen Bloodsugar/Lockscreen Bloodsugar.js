@@ -9,14 +9,13 @@ const widget = await createWidget()
 if (config.runsInWidget) {
   Script.setWidget(widget)
 } else {
-//   widget.presentAccessoryInline()
+  // widget.presentAccessoryInline()
   widget.presentAccessoryRectangular()
 }
 
 async function createWidget() {
-  let reading = await getReading()
-  
-  if (reading) reading = reading.replace(/\(.*?\)/g, "").replace(/\[.*?\]/g, "OLD").trim();
+  const readingRaw = await getReading()
+  const reading = readingRaw?.replace(/\(.*?\)/g, "").replace(/\[.*?\]/g, "OLD").trim();
   const readingNumber = reading?.match(/\d*/)[0]
   const readingInfo = reading?.replace(/\d*/, "").trim()
   
@@ -25,27 +24,11 @@ async function createWidget() {
   
   switch (config.widgetFamily) {
     default: {
-      if (reading) {
-        
-        output.addText(reading)
-        
-      } else {
-        
-        output.addText("No Data")
-      }
-      
+      output.addText(reading ? reading : "No Data")
       break
     }
     case "accessoryInline": {
-      if (reading) {
-        
-        output.addText(`|  ${reading}`)
-        
-      } else {
-        
-        output.addText("|  No Data")
-      }
-      
+      output.addText(reading ? `|  ${reading}` : "|  No Data")
       break
     }
     case "accessoryCircular": {
@@ -114,10 +97,11 @@ async function getReading() {
   const readings = await CalendarEvent.between(oldTime, newTime, [smCal]);
 
   return readings[readings.length - 1]?.title
-  // Test cases
+  // Test cases //
   // return "204 ↑↑ +17  (mg/dL)"
   // return "282 → [OLD] (mg/dL)"
   // return "122 ➚ +24  (mg/dL)"
+  // return
 }
 
 function addMinutes(date, minutes) {
